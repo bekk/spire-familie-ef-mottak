@@ -41,8 +41,8 @@ class PdfService(
     fun skrivSistePdfTilFil(): String {
         søknadRepository.finnSisteLagredeSøknad().søknadPdf?.bytes?.let {
             File("spireTestPdfer/søknad${LocalDateTime.now()}.pdf").writeBytes(it)
-        }
-        return "ok"
+        } ?: "Fant ingen pdf å skrive til fil"
+        return "Ok"
     }
 
     private fun lagFeltMap(

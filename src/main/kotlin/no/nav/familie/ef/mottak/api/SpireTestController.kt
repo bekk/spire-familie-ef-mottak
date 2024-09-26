@@ -15,5 +15,4 @@ class SpireTestController(
     @GetMapping("skrivSistePdfTilFil")
     @Unprotected
     fun skrivSistePdfTilFil(): String = pdfService.skrivSistePdfTilFil()
-
 }
