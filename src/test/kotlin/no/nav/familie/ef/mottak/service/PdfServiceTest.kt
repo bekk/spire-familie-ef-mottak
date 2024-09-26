@@ -10,6 +10,7 @@ import no.nav.familie.ef.mottak.config.DOKUMENTTYPE_OVERGANGSSTØNAD
 import no.nav.familie.ef.mottak.config.DOKUMENTTYPE_SKOLEPENGER
 import no.nav.familie.ef.mottak.encryption.EncryptedString
 import no.nav.familie.ef.mottak.integration.PdfClient
+import no.nav.familie.ef.mottak.integration.SpirePdfClient
 import no.nav.familie.ef.mottak.repository.EttersendingRepository
 import no.nav.familie.ef.mottak.repository.SøknadRepository
 import no.nav.familie.ef.mottak.repository.VedleggRepository
@@ -27,7 +28,8 @@ internal class PdfServiceTest {
     private val vedleggRepository: VedleggRepository = mockk()
     private val ettersendingRepository: EttersendingRepository = mockk()
     private val pdfClient: PdfClient = mockk()
-    private val pdfService: PdfService = PdfService(søknadRepository, ettersendingRepository, vedleggRepository, pdfClient)
+    private val spirePdfClient: SpirePdfClient = mockk()
+    private val pdfService: PdfService = PdfService(søknadRepository, ettersendingRepository, vedleggRepository, pdfClient, spirePdfClient)
 
     private val pdf = EncryptedFile("321".toByteArray())
     private val søknadOvergangsstønadId = "søknadOvergangsstønadId"
