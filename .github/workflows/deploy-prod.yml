@@ -1,7 +1,6 @@
 name: Build, push, and deploy app to dev and prod
 
 on:
-  workflow_dispatch:
 
 permissions:
   contents: "read"
