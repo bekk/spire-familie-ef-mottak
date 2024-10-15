@@ -1,9 +1,6 @@
 name: Build, push, and deploy app to dev and prod
 
 on:
-  push:
-    branches:
-      - 'main'
 
 permissions:
   contents: "read"

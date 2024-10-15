@@ -117,6 +117,9 @@ object SøknadTreeWalker {
                 @Suppress("UNCHECKED_CAST")
                 return listOf(mapDokumentasjon(entitet as Søknadsfelt<Dokumentasjon>))
             }
+            if (entitet.label == "Barna dine") {
+                return listOf(feltlisteMap(entitet.label, list, FeltType.TABLE))
+            }
             if (entitet.verdi!!::class in endNodes) {
                 return listOf(Feltformaterer.mapEndenodeTilUtskriftMap(entitet))
             }
@@ -136,7 +139,13 @@ object SøknadTreeWalker {
     private fun feltlisteMap(
         label: String,
         verdi: List<*>,
-    ) = mapOf("label" to label, "verdiliste" to verdi)
+        type: FeltType? = null,
+    ): Map<String, Any> =
+        if (type == null) {
+            mapOf("label" to label, "verdiliste" to verdi)
+        } else {
+            mapOf("label" to label, "type" to type.typeName, "verdiliste" to verdi)
+        }
 
     /**
      * Henter ut verdien for felt på entitet.
@@ -158,4 +167,10 @@ object SøknadTreeWalker {
      * Konstruktørparametere er det eneste som gir oss en garantert rekkefølge for feltene, så vi henter disse først.
      */
     private fun konstruktørparametere(entity: Any) = entity::class.primaryConstructor?.parameters ?: emptyList()
+}
+
+enum class FeltType(
+    val typeName: String,
+) {
+    TABLE("Table"),
 }
