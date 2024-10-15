@@ -1,7 +1,15 @@
 package no.nav.familie.ef.mottak.service
 
 import no.nav.familie.ef.mottak.repository.domain.Ettersending
-import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.Adresse
+import no.nav.familie.kontrakter.ef.søknad.Datoperiode
+import no.nav.familie.kontrakter.ef.søknad.Dokumentasjon
+import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
+import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
+import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
+import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
+import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -109,7 +117,7 @@ object SøknadTreeWalker {
                 @Suppress("UNCHECKED_CAST")
                 return listOf(mapDokumentasjon(entitet as Søknadsfelt<Dokumentasjon>))
             }
-            if (entitet.label == "Barna dine"){
+            if (entitet.label == "Barna dine") {
                 return listOf(feltlisteMap(entitet.label, list, FeltType.TABLE))
             }
             if (entitet.verdi!!::class in endNodes) {
@@ -131,14 +139,13 @@ object SøknadTreeWalker {
     private fun feltlisteMap(
         label: String,
         verdi: List<*>,
-        type: FeltType? = null
-    ): Map<String, Any>  {
-        return if (type == null){
-            mapOf( "label" to label, "verdiliste" to verdi)
-        } else  {
-            mapOf( "label" to label, "type" to type.typeName, "verdiliste" to verdi)
+        type: FeltType? = null,
+    ): Map<String, Any> =
+        if (type == null) {
+            mapOf("label" to label, "verdiliste" to verdi)
+        } else {
+            mapOf("label" to label, "type" to type.typeName, "verdiliste" to verdi)
         }
-    }
 
     /**
      * Henter ut verdien for felt på entitet.
@@ -162,6 +169,8 @@ object SøknadTreeWalker {
     private fun konstruktørparametere(entity: Any) = entity::class.primaryConstructor?.parameters ?: emptyList()
 }
 
-enum class FeltType(val typeName: String) {
-    TABLE("Table")
+enum class FeltType(
+    val typeName: String,
+) {
+    TABLE("Table"),
 }
