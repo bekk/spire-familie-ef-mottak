@@ -75,6 +75,7 @@ internal class PdfServiceTest {
             vedleggRepository.finnTitlerForSøknadId(any())
         } returns vedlegg.map { it.tittel }
         pdfClientVilReturnere(pdf)
+        every { spirePdfClient.lagFeltMapPdf(any()) } answers { byteArrayOf(51,50,49) }
     }
 
     @Test
